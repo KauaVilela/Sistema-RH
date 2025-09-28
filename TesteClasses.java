@@ -1,4 +1,5 @@
 import java.util.Date;
+import model.Colaborador;
 
 public class TesteClasses {
     public static void main(String[] args) {

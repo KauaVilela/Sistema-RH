@@ -1,7 +1,8 @@
+package model;
 import java.util.Date;
 
 public class Colaborador {
-     private String nome;
+    private String nome;
     private String cpf;
     private Date dataNascimento;
     private int matricula;

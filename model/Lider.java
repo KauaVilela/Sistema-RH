@@ -1,3 +1,4 @@
+package model;
 public class Lider extends Usuario {
     
     private String nivelLideranca;

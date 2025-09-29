@@ -1,26 +1,32 @@
 package controller;
-import java.util.Date;
 import model.Ausencia;
 import model.Colaborador;
+import enums.TipoAusencia;
+import services.ColaboradorService;
+import exceptions.ValidacaoException;
+import java.util.Date;
 
 public class AusenciaController {
+    private final ColaboradorService colaboradorService;
+    private final AprovacaoController aprovacaoController;
     
-    private Ausencia ausencia;
-
-    public AusenciaController() {
-
+    public AusenciaController(ColaboradorService colaboradorService,
+                             AprovacaoController aprovacaoController) {
+        this.colaboradorService = colaboradorService;
+        this.aprovacaoController = aprovacaoController;
     }
-
-    public void justificarAusencia(Date dtInicio, Date dtFim, int tipo, Colaborador colaborador, String justificativa){
-        ausencia = new Ausencia(dtInicio, dtFim, tipo, colaborador, false, justificativa);
+    
+    public Ausencia justificarAusencia(Date dtInicio, Date dtFim, 
+                                       TipoAusencia tipo, 
+                                       Colaborador colaborador, 
+                                       String justificativa) 
+            throws ValidacaoException {
+        
+        if (justificativa == null || justificativa.trim().isEmpty()) {
+            throw new ValidacaoException("Justificativa é obrigatória");
+        }
+        
+        return new Ausencia(dtInicio, dtFim, tipo.getCodigo(), 
+                           colaborador, justificativa);
     }
-
-    public String vizualizarJustificativa(){
-        return ausencia.toString();
-    }
-
-    public void avaliarJustificativa(boolean avaliacao){
-        ausencia.setaprovacao(avaliacao);
-    }
-
 }

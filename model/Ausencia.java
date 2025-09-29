@@ -1,78 +1,52 @@
 package model;
+import interfaces.IAprovavel;
 import java.util.Date;
 
-public class Ausencia {
-    
-    private Date dtInicio, dtFim;
+public class Ausencia implements IAprovavel {
+    private Date dtInicio;
+    private Date dtFim;
     private int tipo;
     private Colaborador colaborador;
-    private boolean aprovacao;
+    private String status;
     private String justificativa;
-
-    // Construtor
-
-    public Ausencia(Date dtInicio, Date dtFim, int tipo, Colaborador colaborador, boolean aprovacao, String justificativa) {
+    private String motivoReprovacao;
+    
+    public Ausencia(Date dtInicio, Date dtFim, int tipo, 
+                    Colaborador colaborador, String justificativa) {
         this.dtInicio = dtInicio;
         this.dtFim = dtFim;
         this.tipo = tipo;
         this.colaborador = colaborador;
         this.justificativa = justificativa;
+        this.status = "PENDENTE";
     }
-
-    // Getters and Setters
-
-    public Date getDtInicio() {
-        return dtInicio;
-    }
-
-    public void setDtInicio(Date dtInicio) {
-        this.dtInicio = dtInicio;
-    }
-
-    public Date getDtFim() {
-        return dtFim;
-    }
-
-    public void setDtFim(Date dtFim) {
-        this.dtFim = dtFim;
-    }
-
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
-
-    public Colaborador getColaborador() {
-        return colaborador;
-    }
-
-    public void setColaborador(Colaborador colaborador) {
-        this.colaborador = colaborador;
-    }
-
-    public boolean isaprovacao() {
-        return aprovacao;
-    }
-
-    public void setaprovacao(boolean aprovacao) {
-        this.aprovacao = aprovacao;
-    }
-
-    public String getJustificativa() {
-        return justificativa;
-    }
-
-    public void setJustificativa(String justificativa) {
-        this.justificativa = justificativa;
-    }
-
+    
     @Override
-    public String toString() {
-        return "Ausencia [dtInicio=" + dtInicio + ", dtFim=" + dtFim + ", tipo=" + tipo + ", colaborador=" + colaborador
-                + ", aprovacao=" + aprovacao + ", justificativa=" + justificativa + "]";
+    public boolean isAprovado() {
+        return "APROVADO".equals(status);
     }
-
+    
+    @Override
+    public void aprovar() {
+        this.status = "APROVADO";
+    }
+    
+    @Override
+    public void reprovar(String motivo) {
+        this.status = "REPROVADO";
+        this.motivoReprovacao = motivo;
+    }
+    
+    @Override
+    public String getStatus() {
+        return status;
+    }
+    
+    // Getters e Setters
+    public Date getDtInicio() { return dtInicio; }
+    public Date getDtFim() { return dtFim; }
+    public int getTipo() { return tipo; }
+    public Colaborador getColaborador() { return colaborador; }
+    public String getJustificativa() { return justificativa; }
+    public String getMotivoReprovacao() { return motivoReprovacao; }
 }

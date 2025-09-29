@@ -1,55 +1,51 @@
 package model;
+import interfaces.IAprovavel;
 import java.util.Date;
 
-public class Ferias {
- 
-    private Date dtInicio, dtFim;
+public class Ferias implements IAprovavel {
+    private Date dtInicio;
+    private Date dtFim;
     private String status;
     private Colaborador colaborador;
-
-    // Construtor
-
-    public Ferias(Date dtInicio, Date dtFim, String status, Colaborador colaborador) {
+    private String motivoReprovacao;
+    
+    public Ferias(Date dtInicio, Date dtFim, Colaborador colaborador) {
         this.dtInicio = dtInicio;
         this.dtFim = dtFim;
-        this.status = status;
         this.colaborador = colaborador;
+        this.status = "SOLICITADO";
     }
-
-    // Getters and Setters
-
-    public Date getDtInicio() {
-        return dtInicio;
+    
+    @Override
+    public boolean isAprovado() {
+        return "APROVADO".equals(status);
     }
-
-    public void setDtInicio(Date dtInicio) {
-        this.dtInicio = dtInicio;
+    
+    @Override
+    public void aprovar() {
+        this.status = "APROVADO";
     }
-
-    public Date getDtFim() {
-        return dtFim;
+    
+    @Override
+    public void reprovar(String motivo) {
+        this.status = "REPROVADO";
+        this.motivoReprovacao = motivo;
     }
-
-    public void setDtFim(Date dtFim) {
-        this.dtFim = dtFim;
-    }
-
+    
+    @Override
     public String getStatus() {
         return status;
     }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Colaborador getColaborador() {
-        return colaborador;
-    }
-
-    public void setColaborador(Colaborador colaborador) {
-        this.colaborador = colaborador;
+    
+    public void iniciar() {
+        if (isAprovado()) {
+            this.status = "EM_CURSO";
+        }
     }
     
-    
-
+    // Getters
+    public Date getDtInicio() { return dtInicio; }
+    public Date getDtFim() { return dtFim; }
+    public Colaborador getColaborador() { return colaborador; }
+    public String getMotivoReprovacao() { return motivoReprovacao; }
 }

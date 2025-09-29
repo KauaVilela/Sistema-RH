@@ -1,3 +1,4 @@
+package model;
 public class FuncionarioRH extends Usuario {
 
      private String areaAtuacao;
